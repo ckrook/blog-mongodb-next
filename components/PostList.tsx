@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function PostList({ posts }: any) {
@@ -14,8 +15,9 @@ export default function PostList({ posts }: any) {
         <li key={post._id}>
           <h1>{post.title}</h1>
           <p>{post.content}</p>
+          <Link href={`/post/${post._id}`}>Read more</Link>
+          <br></br>
           <button onClick={() => deletePost(post._id)}>Delete</button>
-          <button>Edit</button>
         </li>
       ))}
     </ol>

@@ -6,20 +6,16 @@ import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
 
 export async function getServerSideProps(context: any) {
-  try {
-    await clientPromise;
-    const client = await clientPromise;
-    const db = client.db("Blog");
-    const collection = db.collection("posts");
-    const posts = await collection.find({}).toArray();
-    console.log(posts);
-    let data = JSON.stringify(posts);
-    return {
-      props: { data },
-    };
-  } catch (e) {
-    console.error(e);
-  }
+  await clientPromise;
+  const client = await clientPromise;
+  const db = client.db("Blog");
+  const collection = db.collection("posts");
+  const posts = await collection.find({}).toArray();
+  console.log(posts);
+  let data = JSON.stringify(posts);
+  return {
+    props: { data },
+  };
 }
 
 export default function Home({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
