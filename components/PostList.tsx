@@ -1,23 +1,32 @@
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import Router from "next/router";
+import React, { useEffect, useState } from "react";
 
 export default function PostList({ posts }: any) {
-  const deletePost = async (id: any) => {
+  const deletePost = async (e: any, id: any) => {
+    e.preventDefault();
     fetch(`/api/posts/delete/${id}`, {
       method: "DELETE",
     });
-
-    window.location.reload();
   };
+
   return (
     <ol>
       {posts?.map((post: any) => (
-        <li key={post._id}>
-          <h1>{post.title}</h1>
-          <p>{post.content}</p>
-          <Link href={`/post/${post._id}`}>Read more</Link>
-          <br></br>
-          <button onClick={() => deletePost(post._id)}>Delete</button>
+        <li key={post._id} className="mb-6">
+          <Link href={`/post/${post._id}`}>
+            <div className="flex justify-between">
+              <h1 className="text-xl font-medium">{post.title}</h1>
+              <p>{post.views} Views</p>
+            </div>
+            <p>{post.content}</p>
+            <form action="/">
+              <button className="delete" onClick={(e) => deletePost(e, post._id)}>
+                Delete
+              </button>
+            </form>
+          </Link>
         </li>
       ))}
     </ol>

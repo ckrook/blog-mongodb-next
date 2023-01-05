@@ -4,22 +4,17 @@ import { InferGetServerSidePropsType } from "next";
 import { useState } from "react";
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
+import useSWR from "swr";
 
-export async function getServerSideProps(context: any) {
-  await clientPromise;
-  const client = await clientPromise;
-  const db = client.db("Blog");
-  const collection = db.collection("posts");
-  const posts = await collection.find({}).toArray();
-  console.log(posts);
-  let data = JSON.stringify(posts);
-  return {
-    props: { data },
-  };
+async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
+  const res = await fetch(input, init);
+  return res.json();
 }
 
-export default function Home({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  let posts = JSON.parse(data);
+export default function Home() {
+  const { data: posts } = useSWR("/api/posts", fetcher, { refreshInterval: 1 });
+
+  console.log({ posts });
 
   return (
     <div className="container">
@@ -29,8 +24,11 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
       </Head>
 
       <main>
-        <PostForm />
-        <PostList posts={posts} />
+        <div className="w-[55%] m-auto">
+          <PostForm />
+          <h2 className="text-5xl font-bold">All blogposts</h2>
+          <PostList posts={posts} />
+        </div>
       </main>
 
       <footer>footer</footer>
