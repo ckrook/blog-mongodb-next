@@ -2,17 +2,17 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 export default function PostForm() {
-  const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [views, setViews] = useState(0);
 
   const createPost = async (e: any) => {
     e.preventDefault();
     await fetch("http://localhost:3000/api/posts/create", {
       method: "POST",
-      body: JSON.stringify({ title, content, views }),
+      body: JSON.stringify({ title, content, views: 1 }),
     });
+    setTitle("");
+    setContent("");
   };
 
   return (
