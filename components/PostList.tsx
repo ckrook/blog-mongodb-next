@@ -19,7 +19,7 @@ export default function PostList({ posts }: any) {
   return (
     <ol>
       {postsState?.map((post: any) => (
-        <li key={post._id} className="mb-6">
+        <li key={post._id} className="mb-3 border p-3 rounded-md bg-white">
           <Link href={`/post/${post._id}`}>
             <div className="flex justify-between">
               <h1 className="text-xl font-medium">{post.title}</h1>
@@ -27,7 +27,7 @@ export default function PostList({ posts }: any) {
             </div>
             <p>{post.content}</p>
             <form action="/">
-              <button className="delete" onClick={(e) => deletePost(e, post._id)}>
+              <button className="bg-red-500 text-white px-3 rounded" onClick={(e) => deletePost(e, post._id)}>
                 Delete
               </button>
             </form>
