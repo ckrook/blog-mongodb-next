@@ -1,7 +1,7 @@
-const { createVanillaExtractPlugin } = require("@vanilla-extract/next-plugin");
-const withVanillaExtract = createVanillaExtractPlugin();
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-module.exports = withVanillaExtract(nextConfig);
+module.exports = {
+  webpack: (config) => {
+    config.experiments = config.experiments || {};
+    config.experiments.topLevelAwait = true;
+    return config;
+  },
+};
