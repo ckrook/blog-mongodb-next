@@ -14,8 +14,6 @@ async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Prom
 export default function Home() {
   const { data: posts } = useSWR("/api/posts", fetcher, { refreshInterval: 1 });
 
-  console.log({ posts });
-
   return (
     <div className="container">
       <Head>
