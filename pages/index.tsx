@@ -1,48 +1,78 @@
 import Head from "next/head";
 import clientPromise from "../lib/mongodb";
-import { InferGetServerSidePropsType } from "next";
-import { useState } from "react";
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
 import useSWR from "swr";
+import { getSession, useSession } from "next-auth/react";
+import Layout from "../components/Layout";
+import AccessDenied from "../components/AccessDenied";
+import { useEffect } from "react";
 
 async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
   const res = await fetch(input, init);
   return res.json();
 }
 
-export default function Home() {
+function createUserInDatabaseIfNotExists(session: any) {
+  if (session) {
+    fetch("/api/users/create", {
+      method: "POST",
+      body: JSON.stringify({
+        email: session.user.email,
+        name: session.user.name,
+        image: session.user.image,
+      }),
+    });
+  }
+}
+
+export default function Home({ session }: any) {
   const { data: posts } = useSWR("/api/posts", fetcher, { refreshInterval: 1 });
+  console.log(session);
+
+  useEffect(() => {
+    createUserInDatabaseIfNotExists(session);
+  }, [session]);
+
+  if (!session) {
+    return (
+      <Layout>
+        <AccessDenied />
+      </Layout>
+    );
+  }
+
+  if (!session) {
+    return (
+      <Layout>
+        <AccessDenied />
+      </Layout>
+    );
+  }
 
   return (
-    <div className="container">
+    <Layout>
       <Head>
         <title>MERN blog app</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <div className="w-[55%] m-auto">
-          <PostForm />
-          <h2 className="text-5xl font-bold">All blogposts</h2>
-          <PostList posts={posts} />
-        </div>
+        <h1 className="text-6xl font-bold">Protected Page</h1>
+        <PostForm session={session} />
+        <h2 className="text-5xl font-bold">All blogposts</h2>
+        <PostList posts={posts} />
       </main>
 
       <footer>footer</footer>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
+    </Layout>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const session = await getSession(context);
+
+  return {
+    props: { session },
+  };
 }
