@@ -2,17 +2,16 @@ import { signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
 
 export default function Dropdown() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
-    console.log(isOpen);
   }
 
   return (
     <>
-      <button onClick={() => toggleDropdown()} className={`text-white absolute bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  ${isOpen ? "hidden" : "block"}`} type="button">
+      <button onClick={() => toggleDropdown()} className={`text-black absolute shadow bg-white hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  ${isOpen ? "hidden" : "block"}`} type="button">
         Dropdown header
         <svg className="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
@@ -26,7 +25,12 @@ export default function Dropdown() {
         </div>
         <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
           <li>
-            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+            <a href="/admin" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              Write a blogpost
+            </a>
+          </li>
+          <li>
+            <a href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
               Dashboard
             </a>
           </li>

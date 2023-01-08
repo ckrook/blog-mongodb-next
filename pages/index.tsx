@@ -28,7 +28,6 @@ function createUserInDatabaseIfNotExists(session: any) {
 
 export default function Home({ session }: any) {
   const { data: posts } = useSWR("/api/posts", fetcher, { refreshInterval: 1 });
-  console.log(session);
 
   useEffect(() => {
     createUserInDatabaseIfNotExists(session);
@@ -57,13 +56,21 @@ export default function Home({ session }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className="text-6xl font-bold">Protected Page</h1>
-        <PostForm session={session} />
-        <h2 className="text-5xl font-bold">All blogposts</h2>
-        <PostList posts={posts} />
+      <section className="bg-gray-900 text-white text-center py-32">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl">A blogplatform</h2>
+          <p>A fullstack Next-Mongodb blogplatform</p>
+        </div>
+      </section>
+      <main className="container">
+        <div className="my-10">
+          <div className="flex justify-between mb-10">
+            <h2 className="text-3xl font-bold">All blogposts</h2>
+            <input type="text" placeholder="Search" className="bg-white shadow border-gray-100 rounded-full  w-96" />
+          </div>
+          <PostList posts={posts} />
+        </div>
       </main>
-
       <footer>footer</footer>
     </Layout>
   );

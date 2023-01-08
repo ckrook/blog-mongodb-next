@@ -5,6 +5,7 @@ import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
 import CommentForm from "../../components/CommentForm";
+import Layout from "../../components/Layout";
 
 async function increaseViews(id: string) {
   await clientPromise;
@@ -54,14 +55,22 @@ export async function getServerSideProps({ query }: any) {
 
 export default function post(data: any) {
   const post = JSON.parse(data.data.post);
-  const comments = JSON.parse(data.data.comments);
+  const commentsData = JSON.parse(data.data.comments);
+  const [comments, setComments] = React.useState(commentsData);
 
   return (
-    <div>
+    <Layout>
       <Link href="/">Go back</Link>
-      <h1>{post[0].title}</h1>
-      <p>{post[0].content}</p>
-      <p>{post[0].views} Views</p>
+      <li key={post[0]._id} className="mb-3 border p-5 rounded-md bg-white flex cursor-pointer">
+        <img src={post[0].author.image} alt={post[0].author.name} className="rounded-full w-10 h-10 mr-4" />
+        <Link href={`/post/${post[0]._id}`}>
+          <div className="flex justify-between">
+            <h1 className="text-xl font-medium">{post[0].title}</h1>
+            <p>{post[0].views} Views</p>
+          </div>
+          <p>{post[0].content}</p>
+        </Link>
+      </li>
       <div>
         <h2>Comments</h2>
         {comments.map((comment: any) => (
@@ -70,7 +79,7 @@ export default function post(data: any) {
           </div>
         ))}
       </div>
-      <CommentForm data={post[0]._id} />
-    </div>
+      <CommentForm data={post[0]._id} comments={comments} />
+    </Layout>
   );
 }
