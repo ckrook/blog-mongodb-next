@@ -15,7 +15,7 @@ export default function Header() {
       {session ? (
         <div className="flex items-center">
           <Link href={"/"}>
-            <Image src={"/logo.svg"} height={16} width={16} alt="logo" />
+            <Image src={"/logo.svg"} height={30} width={30} alt="logo" />
           </Link>
           {router.pathname === "/admin" ? <div className="ml-4">Draft</div> : <input type="text" placeholder="Search" className="bg-stone-100 ml-5 border-gray-100 rounded-full  w-96" />}
         </div>
