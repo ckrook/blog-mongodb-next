@@ -14,7 +14,7 @@ export default function PostForm({ session }: any) {
 
   return (
     <form action="/" onSubmit={(e) => handleSubmit(e, session)} className=" h-[calc(100vh-84px)] flex gap-3 flex-col justify-between">
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-10">
         <input className="border-none focus:ring-0 focus:ring-offset-0 bg-gray-50 text-5xl font-serif" placeholder="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       <textarea className="resize-none h-5/6 focus:ring-0 focus:ring-offset-0 shadow-none border-none bg-gray-50 text-xl font-serif" placeholder="Tell your story..." value={content} onChange={(e) => setContent(e.target.value)} />

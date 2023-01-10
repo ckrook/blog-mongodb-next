@@ -11,14 +11,14 @@ export default function Dropdown() {
 
   return (
     <>
-      <button onClick={() => toggleDropdown()} className={`text-black absolute shadow bg-white hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  ${isOpen ? "hidden" : "block"}`} type="button">
-        Dropdown header
+      <button onClick={() => toggleDropdown()} className={`text-black  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  ${isOpen ? "hidden" : "block"}`} type="button">
+        <img src={`${session?.user?.image}`} alt={`${session?.user?.image}`} className="rounded-full w-9 mr-4" />
         <svg className="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
         </svg>
       </button>
-
-      <div className={`z-10 absolute bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600 ${isOpen ? "block" : "hidden"}`}>
+      <div className={`h-14 ${isOpen ? "block" : "hidden"}`}></div>
+      <div className={`z-10 absolute bg-white divide-y m-2 divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600 ${isOpen ? "block" : "hidden"}`}>
         <div onClick={() => toggleDropdown()} className="px-4 cursor-pointer py-3 text-sm text-gray-900 dark:text-white">
           <div>{session?.user?.name}</div>
           <div className="font-medium truncate">{session?.user?.email}</div>

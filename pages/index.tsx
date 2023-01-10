@@ -52,17 +52,10 @@ export default function Home({ session }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="bg-gray-900 text-white text-center py-32">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl">A blogplatform</h2>
-          <p>A fullstack Next-Mongodb blogplatform</p>
-        </div>
-      </section>
       <main className="container">
         <div className="my-10">
           <div className="flex justify-between mb-10">
             <h2 className="text-3xl font-bold">All blogposts</h2>
-            <input type="text" placeholder="Search" className="bg-white shadow border-gray-100 rounded-full  w-96" />
           </div>
           <PostList posts={posts} />
         </div>
