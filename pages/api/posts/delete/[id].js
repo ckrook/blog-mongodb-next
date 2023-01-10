@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     await db.collection("posts").deleteOne({ _id: ObjectId(id) });
     let result = await db.collection("posts").find({}).toArray();
 
-    res.status(200).json({ result });
+    res.status(200).redirect("/");
   } else {
     res.status(404).json({ message: "Method not allowed" });
   }

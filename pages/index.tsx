@@ -7,11 +7,7 @@ import { getSession, useSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import AccessDenied from "../components/AccessDenied";
 import { useEffect } from "react";
-
-async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
-  const res = await fetch(input, init);
-  return res.json();
-}
+import { fetcher } from "../lib/helpers";
 
 function createUserInDatabaseIfNotExists(session: any) {
   if (session) {

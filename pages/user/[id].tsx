@@ -1,5 +1,6 @@
 import React from "react";
+import Layout from "../../components/Layout";
 
 export default function user() {
-  return <div>user</div>;
+  return <Layout>user</Layout>;
 }
