@@ -20,5 +20,5 @@ textarea {
 }
 
 .container {
-  @apply mx-auto w-[95%] sm:w-[75%] md:w-[65%] lg:w-[55%];
+  @apply mx-auto w-[95%] sm:w-[75%] md:w-[85%] lg:w-[85%];
 }

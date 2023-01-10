@@ -15,7 +15,7 @@ export const createPost = async (e: any, session: any, title: string, content: s
 
   await fetch("http://localhost:3000/api/posts/create", {
     method: "POST",
-    body: JSON.stringify({ title, content, views: 1, author: data }),
+    body: JSON.stringify({ title, content, published: new Date(), author: data }),
   });
 };
 

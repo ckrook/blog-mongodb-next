@@ -6,6 +6,9 @@ import { ObjectId } from "mongodb";
 import Link from "next/link";
 import CommentForm from "../../components/CommentForm";
 import Layout from "../../components/Layout";
+import { calculateReadTime, convertNewDateToString, timeSinceDate } from "../../lib/helpers";
+import { BsLink45Deg } from "react-icons/bs";
+import toast, { Toaster } from "react-hot-toast";
 
 async function increaseViews(id: string) {
   await clientPromise;
@@ -38,6 +41,7 @@ export async function getServerSideProps({ query }: any) {
 
   let post = JSON.stringify(posts);
   let comments = JSON.stringify(commentsData);
+  console.log("comments: ", commentsData);
 
   increaseViews(id);
 
@@ -53,42 +57,63 @@ export async function getServerSideProps({ query }: any) {
   };
 }
 
+function SaveUrlToClipboard() {
+  toast("Saved to clipboard!");
+  const url = window.location.href;
+  navigator.clipboard.writeText(url);
+}
+
 export default function post(data: any) {
   const post = JSON.parse(data.data.post);
   const commentsData = JSON.parse(data.data.comments);
+
   const [comments, setComments] = React.useState(commentsData);
   const router = useRouter();
+
   return (
     <Layout>
-      <main className="container">
-        <Link href="/">Go back</Link>
-        <li key={post[0]._id} className="mb-3 border p-5 rounded-md bg-white flex justify-between cursor-pointer">
-          <div className="flex">
-            <img src={post[0].author.image} alt={post[0].author.name} className="rounded-full w-10 h-10 mr-4" />
+      <main className="container grid grid-cols-3">
+        <div className=" col-span-2">
+          <div className="flex gap-4 my-10 justify-between items-center">
+            <div className="flex gap-4">
+              <img src={post[0].author.image} className="rounded-full w-14" alt="" />
+              <div>
+                <p>{post[0].author.name}</p>
+                <div className="flex gap-2">
+                  <span>{convertNewDateToString(post[0].published)}</span>·<span>{calculateReadTime(post[0].content)} min read</span>
+                </div>
+              </div>
+            </div>
             <div>
-              <h1 className="text-2xl font-medium">{post[0].title}</h1>
-              <p>{post[0].content}</p>
-              <button
-                onClick={() => {
-                  deletePost(post[0]._id), router.push("/");
-                }}
-                className="btn !bg-red-500"
-              >
-                Delete
+              <button onClick={() => SaveUrlToClipboard()}>
+                <BsLink45Deg className="w-6 h-6" />
+                <Toaster />
               </button>
             </div>
           </div>
-          <p>{post[0].views} Views</p>
-        </li>
-        <div>
-          <h2>Comments</h2>
-          {comments.map((comment: any) => (
-            <div key={comment._id}>
-              <p>{comment.content}</p>
-            </div>
-          ))}
+          <div className="mb-10">
+            <h1 className="text-4xl font-bold mb-4">{post[0].title}</h1>
+            <p>{post[0].content}</p>
+          </div>
+          <button className="btn bg-red-500 rounded-full" onClick={() => deletePost(post[0]._id)}>
+            Delete
+          </button>
+          <div className="my-10">
+            {comments.map((comment: any) => (
+              <div key={comment._id} className=" border-b py-6 items-center">
+                <div className="flex gap-4 mb-3">
+                  <img src={comment.author.image} className="rounded-full w-12" alt="" />
+                  <div className="flex flex-col ">
+                    <p>{comment.author.name}</p>
+                    <p>{timeSinceDate(comment.published)} ago</p>
+                  </div>
+                </div>
+                <p>{comment.content}</p>
+              </div>
+            ))}
+          </div>
+          <CommentForm data={post[0]._id} comments={comments} />
         </div>
-        <CommentForm data={post[0]._id} comments={comments} />
       </main>
     </Layout>
   );

@@ -52,8 +52,8 @@ export default function Home({ session }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container">
-        <div className="my-10">
+      <main className="container grid grid-cols-3 py-10">
+        <div className=" col-span-2">
           <div className="flex justify-between mb-10">
             <h2 className="text-3xl font-bold">All blogposts</h2>
           </div>
