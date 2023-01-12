@@ -24,7 +24,7 @@ export default function PostList({ posts }: any) {
                   <span className="text-xs">{calculateReadTime(post.content)} min read</span>
                 </div>
                 <div>
-                  <p>{post.views} Views</p>
+                  <p className="text-gray-500 text-sm">{post.views} Views</p>
                 </div>
               </div>
               <p>{reduceText(post.content, 150)}</p>

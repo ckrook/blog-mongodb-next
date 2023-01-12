@@ -13,10 +13,10 @@ export default function CommentForm({ data }: any) {
   }
 
   return (
-    <div>
+    <div className="mb-10">
       <p>Write a comment</p>
-      <form action="">
-        <input type="text" value={content} onChange={(e) => setContent(e.target.value)} />
+      <form action="" className="flex flex-col gap-4">
+        <textarea className="border rounded-md h-20 resize-none" value={content} onChange={(e) => setContent(e.target.value)} />
         <input type="submit" value="Submit" onClick={(e) => handleSubmit(e, data, session)} />
       </form>
     </div>

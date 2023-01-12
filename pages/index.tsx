@@ -8,6 +8,7 @@ import Layout from "../components/Layout";
 import AccessDenied from "../components/AccessDenied";
 import { useEffect } from "react";
 import { fetcher } from "../lib/helpers";
+import { getUsersPosts } from "../hooks/posts";
 
 function createUserInDatabaseIfNotExists(session: any) {
   if (session) {

@@ -26,17 +26,17 @@ export default function Dropdown() {
         <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
           <li>
             <a href="/admin" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-              Write a blogpost
+              Write
             </a>
           </li>
           <li>
             <a href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-              Dashboard
+              Startpage
             </a>
           </li>
           <li>
-            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-              Settings
+            <a href="/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              Profile
             </a>
           </li>
         </ul>

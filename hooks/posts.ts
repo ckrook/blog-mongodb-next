@@ -19,19 +19,20 @@ export const createPost = async (e: any, session: any, title: string, content: s
   });
 };
 
-export const getUsersPosts = async (e: any, session: any) => {
-  e.preventDefault();
-
+export const getUsersPosts = async (session: any) => {
   const email = session.user.email;
   const user = await fetch(`http://localhost:3000/api/users/${email}`, {
     method: "GET",
   });
   const data = await user.json();
+  console.log(data._id);
 
-  await fetch("http://localhost:3000/api/posts/", {
+  const test = await fetch(`http://localhost:3000/api/posts/${data._id}`, {
     method: "GET",
-    body: JSON.stringify({ author: data }),
   });
+
+  const datas = await test.json();
+  return datas;
 };
 
 export const deletePost = async (id: string) => {
