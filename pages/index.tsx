@@ -52,15 +52,27 @@ export default function Home({ session }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container grid grid-cols-3 py-10">
-        <div className=" col-span-2">
+      <div className="container grid grid-cols-3 py-10">
+        <main className=" col-span-2">
           <div className="flex justify-between mb-10">
             <h2 className="text-3xl font-bold">All blogposts</h2>
           </div>
           <PostList posts={posts} />
-        </div>
-      </main>
-      <footer>footer</footer>
+        </main>
+        <aside>
+          <div className="p-20">
+            <button className="bg-gray-900 text-white rounded-full py-4 w-full mb-8">Get unlimited acess</button>
+            <h3 className="text-xl mb-5">Staff picks</h3>
+            <div>
+              <div className="flex gap-2 items-center">
+                <img src="https://lh3.googleusercontent.com/a/AEdFTp5RhnShx4VRzrKCk11-NHrhkJDMvSYeL7rcVghgLw=s96-c" className="rounded-full w-8 " alt="" />
+                <p className="text-lg">Charles Krook</p>
+              </div>
+              <p className="font-bold text-2xl ">Lorem ipsum dolor sit amet consectetur </p>
+            </div>
+          </div>
+        </aside>
+      </div>
     </Layout>
   );
 }

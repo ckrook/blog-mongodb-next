@@ -9,7 +9,6 @@ export default function CommentForm({ data }: any) {
   async function handleSubmit(e: any, data: any, session: any) {
     e.preventDefault();
     createComment(e, session, content, data);
-
     setContent("");
   }
 

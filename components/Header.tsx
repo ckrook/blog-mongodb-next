@@ -21,8 +21,9 @@ export default function Header() {
         </div>
       ) : (
         <div>
-          <h1 className="text-2xl font-bold">TypeShip</h1>
-          <p className="text-sm">A fullstack Next-Mongodb blogplatform</p>
+          <Link href={"/"}>
+            <Image src={"/logo.svg"} height={30} width={30} alt="logo" />
+          </Link>
         </div>
       )}
       <div>

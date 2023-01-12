@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@vanilla-extract/css": "^1.9.2",
@@ -25,6 +26,7 @@
     "@vanilla-extract/next-plugin": "^2.1.1",
     "@vanilla-extract/rollup-plugin": "^1.2.0",
     "autoprefixer": "^10.4.13",
+    "cypress": "^12.3.0",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4",
     "typescript": "4.6.3"

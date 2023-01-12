@@ -15,6 +15,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/posts/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/posts/index.js", "cypress/e2e/spec.cy.js"],
   "exclude": ["node_modules"]
 }
