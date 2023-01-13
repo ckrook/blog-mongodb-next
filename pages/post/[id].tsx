@@ -6,7 +6,7 @@ import { ObjectId } from "mongodb";
 import Link from "next/link";
 import CommentForm from "../../components/CommentForm";
 import Layout from "../../components/Layout";
-import { calculateReadTime, convertNewDateToString, SaveUrlToClipboard, timeSinceDate } from "../../lib/helpers";
+import { calculateReadTime, checkTruthfulness, convertNewDateToString, SaveUrlToClipboard, timeSinceDate } from "../../lib/helpers";
 import { BsLink45Deg } from "react-icons/bs";
 import toast, { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
@@ -15,10 +15,12 @@ import AuthCheck from "../../components/AuthCheck";
 export async function getServerSideProps({ query }: any) {
   const id = query.id;
 
+  // connect to mongodb
   await clientPromise;
   const client = await clientPromise;
   const db = client.db("Blog");
 
+  // get post
   const collection = db.collection("posts");
   const posts = await collection.find({ _id: new ObjectId(id) }).toArray();
 
@@ -36,6 +38,7 @@ export async function getServerSideProps({ query }: any) {
   let post = JSON.stringify(posts);
   let comments = JSON.stringify(commentsData);
 
+  // Everytime someone visits a post, the views will increase
   increaseViews(id);
 
   const data = {
@@ -43,6 +46,7 @@ export async function getServerSideProps({ query }: any) {
     comments,
   };
 
+  // return props to the page
   return {
     props: {
       data,
@@ -50,19 +54,12 @@ export async function getServerSideProps({ query }: any) {
   };
 }
 
-function checkTruthfulness(post: any, session: any) {
-  if (post?.author?.email === session?.user?.email) {
-    return true;
-  }
-  return false;
-}
-
 export default function post(data: any) {
   const { data: session } = useSession();
   const post = JSON.parse(data.data.post);
   const commentsData = JSON.parse(data.data.comments);
 
-  const [comments, setComments] = React.useState(commentsData);
+  const comments = commentsData;
 
   return (
     <Layout>
@@ -119,6 +116,7 @@ export default function post(data: any) {
   );
 }
 
+// Function to increase views
 async function increaseViews(id: string) {
   await clientPromise;
   const client = await clientPromise;

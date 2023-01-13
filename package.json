@@ -4,6 +4,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "start-server-and-test dev http://localhost:3000 cypress:open",
     "cypress:open": "cypress open"
   },
   "dependencies": {
