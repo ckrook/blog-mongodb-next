@@ -15,15 +15,18 @@ export default function profile({ session, posts }: any) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <div className="container py-20 grid grid-cols-3 gap-5">
+        <div className="container py-10 sm:py-20 grid grid-cols-1 md:grid-cols-3 gap-5">
           <main className=" col-span-2">
             <h2 className="text-3xl mb-4">My blogposts</h2>
             <PostList posts={posts} />
           </main>
-          <aside>
-            <div className="mt-14">
-              <img src={session?.user?.image} className="rounded-full " alt="Avatar" />
-              <p>{session?.user?.name}</p>
+          <aside className="order-first md:order-last">
+            <div className="mt-0 sm:mt-14 flex items-center gap-4">
+              <img src={session?.user?.image} className="rounded-full w-14 " alt="Avatar" />
+              <div>
+                <p className="text-xl">{session?.user?.name}</p>
+                <p className="text-xl">{session?.user?.email}</p>
+              </div>
             </div>
           </aside>
         </div>

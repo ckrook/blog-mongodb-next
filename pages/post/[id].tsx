@@ -63,7 +63,7 @@ export default function post(data: any) {
 
   return (
     <Layout>
-      <main className="container grid grid-cols-3">
+      <main className="container grid grid-cols-1 md:grid-cols-3">
         <div className=" col-span-2">
           <div className="flex gap-4 my-10 justify-between items-center">
             <div className="flex gap-4">

@@ -37,7 +37,7 @@ export default function Home({ session }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="container grid grid-cols-3 py-10">
+      <div className="container grid grid-cols-1 md:grid-cols-3 py-10">
         <main className=" col-span-2">
           <div className="flex justify-between mb-10">
             <h2 className="text-3xl font-bold">All blogposts</h2>
@@ -45,7 +45,7 @@ export default function Home({ session }: any) {
           <PostList posts={posts} />
         </main>
         <aside>
-          <div className="p-20">
+          <div className="p-4">
             <button className="bg-gray-900 text-white rounded-full py-4 w-full mb-8">Get unlimited acess</button>
             <h3 className="text-xl mb-5">Staff picks</h3>
             <div>
