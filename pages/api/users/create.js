@@ -6,7 +6,6 @@ export default async function handler(req, res) {
     const db = client.db("Blog");
     const newUser = JSON.parse(req.body);
     const doesUserExists = await db.collection("users").findOne({ email: newUser.email });
-    console.log(doesUserExists);
     if (doesUserExists) return;
 
     await db.collection("users").insertOne(newUser);

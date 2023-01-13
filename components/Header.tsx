@@ -8,7 +8,6 @@ import Dropdown from "./Dropdown";
 export default function Header() {
   const { data: session } = useSession();
   const router = useRouter();
-  console.log(router.pathname);
 
   return (
     <header className="bg-white flex justify-between items-center py-2 px-4 border-b">
