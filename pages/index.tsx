@@ -30,22 +30,6 @@ export default function Home({ session }: any) {
     createUserInDatabaseIfNotExists(session);
   }, [session]);
 
-  if (!session) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    );
-  }
-
-  if (!session) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    );
-  }
-
   return (
     <Layout>
       <Head>

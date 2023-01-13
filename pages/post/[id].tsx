@@ -6,17 +6,11 @@ import { ObjectId } from "mongodb";
 import Link from "next/link";
 import CommentForm from "../../components/CommentForm";
 import Layout from "../../components/Layout";
-import { calculateReadTime, convertNewDateToString, timeSinceDate } from "../../lib/helpers";
+import { calculateReadTime, convertNewDateToString, SaveUrlToClipboard, timeSinceDate } from "../../lib/helpers";
 import { BsLink45Deg } from "react-icons/bs";
 import toast, { Toaster } from "react-hot-toast";
-
-async function increaseViews(id: string) {
-  await clientPromise;
-  const client = await clientPromise;
-  const db = client.db("Blog");
-  const collection = db.collection("posts");
-  await collection.updateOne({ _id: new ObjectId(id) }, { $inc: { views: 1 } });
-}
+import { useSession } from "next-auth/react";
+import AuthCheck from "../../components/AuthCheck";
 
 export async function getServerSideProps({ query }: any) {
   const id = query.id;
@@ -41,7 +35,6 @@ export async function getServerSideProps({ query }: any) {
 
   let post = JSON.stringify(posts);
   let comments = JSON.stringify(commentsData);
-  console.log("comments: ", commentsData);
 
   increaseViews(id);
 
@@ -57,18 +50,19 @@ export async function getServerSideProps({ query }: any) {
   };
 }
 
-function SaveUrlToClipboard() {
-  toast("Saved to clipboard!");
-  const url = window.location.href;
-  navigator.clipboard.writeText(url);
+function checkTruthfulness(post: any, session: any) {
+  if (post?.author?.email === session?.user?.email) {
+    return true;
+  }
+  return false;
 }
 
 export default function post(data: any) {
+  const { data: session } = useSession();
   const post = JSON.parse(data.data.post);
   const commentsData = JSON.parse(data.data.comments);
 
   const [comments, setComments] = React.useState(commentsData);
-  const router = useRouter();
 
   return (
     <Layout>
@@ -95,9 +89,15 @@ export default function post(data: any) {
             <h1 className="text-4xl font-bold mb-4">{post[0].title}</h1>
             <p>{post[0].content}</p>
           </div>
-          <button className="btn bg-red-500 rounded-full" onClick={() => deletePost(post[0]._id)}>
-            Delete
-          </button>
+
+          <AuthCheck>
+            {checkTruthfulness(post[0], session) ? (
+              <button className="btn bg-red-500 rounded-full" onClick={() => deletePost(post[0]._id)}>
+                Delete
+              </button>
+            ) : null}
+          </AuthCheck>
+
           <div className="my-10">
             {comments.map((comment: any) => (
               <div key={comment._id} className=" border-b py-6 items-center">
@@ -117,4 +117,12 @@ export default function post(data: any) {
       </main>
     </Layout>
   );
+}
+
+async function increaseViews(id: string) {
+  await clientPromise;
+  const client = await clientPromise;
+  const db = client.db("Blog");
+  const collection = db.collection("posts");
+  await collection.updateOne({ _id: new ObjectId(id) }, { $inc: { views: 1 } });
 }

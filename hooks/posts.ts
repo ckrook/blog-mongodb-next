@@ -25,7 +25,6 @@ export const getUsersPosts = async (session: any) => {
     method: "GET",
   });
   const data = await user.json();
-  console.log(data._id);
 
   const test = await fetch(`http://localhost:3000/api/posts/${data._id}`, {
     method: "GET",

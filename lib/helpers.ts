@@ -1,3 +1,5 @@
+import { toast } from "react-hot-toast";
+
 export async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
   const res = await fetch(input, init);
   return res.json();
@@ -45,4 +47,10 @@ export function timeSinceDate(date: string) {
 export function convertNewDateToString(date: string) {
   const newDate = new Date(date);
   return newDate.toDateString();
+}
+
+export function SaveUrlToClipboard() {
+  toast("Saved to clipboard!");
+  const url = window.location.href;
+  navigator.clipboard.writeText(url);
 }
