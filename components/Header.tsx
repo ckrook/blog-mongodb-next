@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import Dropdown from "./Dropdown";
+import SearchInput from "./SearchInput";
 
 export default function Header() {
   const { data: session } = useSession();
@@ -16,7 +17,7 @@ export default function Header() {
           <Link href={"/"}>
             <Image src={"/logo.svg"} height={30} width={30} alt="logo" />
           </Link>
-          {router.pathname === "/admin" ? <div className="ml-4">Draft</div> : <input type="text" placeholder="Search" className="bg-stone-100 ml-5 border-gray-100 rounded-full  w-96" />}
+          {router.pathname === "/admin" ? <div className="ml-4">Draft</div> : <SearchInput />}
         </div>
       ) : (
         <div>
