@@ -18,7 +18,6 @@ export default function PostForm({ session }: any) {
         <input className="border-none focus:ring-0 focus:ring-offset-0 bg-gray-50 text-5xl font-serif" placeholder="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       <textarea className="resize-none h-5/6 focus:ring-0 focus:ring-offset-0 shadow-none border-none bg-gray-50 text-xl font-serif" placeholder="Tell your story..." value={content} onChange={(e) => setContent(e.target.value)} />
-      <input type="text" placeholder="Add tags" className="rounded-full border-none" />
       <input type="submit" value="Submit" className="mb-10 cursor-pointer bg-green-500 text-white font-medium py-4 rounded-full text-xl" />
     </form>
   );
