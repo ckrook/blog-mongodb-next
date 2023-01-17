@@ -2,7 +2,9 @@ import { ObjectId } from "mongodb";
 import Head from "next/head";
 import React from "react";
 import AuthCheck from "../../components/AuthCheck";
+import CardAvatar from "../../components/CardAvatar";
 import Layout from "../../components/Layout";
+import PostList from "../../components/PostList";
 import clientPromise from "../../lib/mongodb";
 
 export async function getServerSideProps({ query }: any) {
@@ -13,14 +15,20 @@ export async function getServerSideProps({ query }: any) {
   const client = await clientPromise;
   const db = client.db("Blog");
 
-  // get post
-  const collection = db.collection("users");
-  const usersData = await collection.find({ _id: new ObjectId(id) }).toArray();
+  // get user
+  const Usercollection = db.collection("users");
+  const usersData = await Usercollection.find({ _id: new ObjectId(id) }).toArray();
 
-  let users = JSON.stringify(usersData);
+  // get posts
+  const PostCollection = db.collection("posts");
+  const postsData = await PostCollection.find({ "author._id": id }).toArray();
+
+  let user = JSON.stringify(usersData);
+  let posts = JSON.stringify(postsData);
 
   const data = {
-    users,
+    user,
+    posts,
   };
 
   // return props to the page
@@ -32,9 +40,10 @@ export async function getServerSideProps({ query }: any) {
 }
 
 export default function user({ data }: any) {
-  const users = JSON.parse(data.users);
-  console.log(users);
-
+  const user = JSON.parse(data.user);
+  const posts = JSON.parse(data.posts);
+  console.log(user);
+  console.log("posts: ", posts);
   return (
     <Layout>
       <AuthCheck>
@@ -45,10 +54,12 @@ export default function user({ data }: any) {
 
         <div className="container py-10 sm:py-20 grid grid-cols-1 md:grid-cols-3 gap-5">
           <main className=" col-span-2">
-            <h2 className="text-3xl mb-4">My blogposts</h2>
+            <h2 className="text-3xl mb-4">{user[0].name}s blogposts</h2>
+            <PostList posts={posts} />
           </main>
-          <aside className="order-first md:order-last">
-            <div className="mt-0 sm:mt-14 flex items-center gap-4"></div>
+          <aside className="col-span-1 order-first md:order-last">
+            <h2 className="text-3xl mb-4">Profile</h2>
+            <CardAvatar user={user[0]} posts={posts} />
           </aside>
         </div>
       </AuthCheck>
