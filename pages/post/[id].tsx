@@ -76,7 +76,7 @@ export default function post(data: any) {
               </div>
             </div>
             <div>
-              <button onClick={() => SaveUrlToClipboard()}>
+              <button data-id="copy-url-button" onClick={() => SaveUrlToClipboard()}>
                 <BsLink45Deg className="w-6 h-6" />
                 <Toaster />
               </button>

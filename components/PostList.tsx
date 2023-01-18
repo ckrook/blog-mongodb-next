@@ -19,7 +19,7 @@ export default function PostList({ posts }: any) {
             </Link>
             <Link href={`/post/${post._id}`} className="w-full">
               <div className="flex justify-between">
-                <div className="flex items-center gap-3">
+                <div id="header" className="flex items-center gap-3">
                   <h1 className="text-xl font-medium">{post.title}</h1>
                   <span className="text-xs">{calculateReadTime(post.content)} min read</span>
                 </div>

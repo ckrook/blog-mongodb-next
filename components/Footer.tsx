@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-white sticky">
+    <footer className="bg-white">
       <div className="container py-24">
         <div className=" mb-4">
           <Link href={"/"}>

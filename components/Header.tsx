@@ -21,7 +21,7 @@ export default function Header() {
         </div>
       ) : (
         <div>
-          <Link href={"/"}>
+          <Link id="homelogolink" href={"/"}>
             <Image src={"/logo.svg"} height={30} width={30} alt="logo" />
           </Link>
         </div>
@@ -31,7 +31,7 @@ export default function Header() {
           {session ? (
             <Dropdown />
           ) : (
-            <button onClick={() => signIn()} className="btn">
+            <button id="signin" onClick={() => signIn()} className="btn">
               Sign in
             </button>
           )}
