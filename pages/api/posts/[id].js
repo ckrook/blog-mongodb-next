@@ -6,10 +6,7 @@ export default async function handler(req, res) {
     const { id } = req.query;
     const client = await clientPromise;
     const db = client.db("Blog");
-    const result = await db
-      .collection("posts")
-      .find({ _id: ObjectId(id) })
-      .toArray();
+    const result = await db.collection("posts").find({ "author._id": id }).toArray();
     res.status(200).json(result);
   }
 }

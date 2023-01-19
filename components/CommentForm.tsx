@@ -1,24 +1,27 @@
+import { useSession } from "next-auth/react";
 import React from "react";
+import { createComment } from "../hooks/comments";
+import AuthCheck from "./AuthCheck";
 
-export default function CommentForm(data: any) {
+export default function CommentForm({ data }: any) {
   const [content, setContent] = React.useState("");
+  const { data: session } = useSession();
 
-  async function createComment(post_id: any) {
-    await fetch("/api/comments/create", {
-      method: "POST",
-      body: JSON.stringify({ content, post_id }),
-    });
-    window.location.reload();
+  async function handleSubmit(e: any, data: any, session: any) {
+    e.preventDefault();
+    createComment(e, session, content, data);
+    setContent("");
   }
-  console.log(data.data);
 
   return (
-    <div>
-      <p>Write a comment</p>
-      <form action="">
-        <input type="text" value={content} onChange={(e) => setContent(e.target.value)} />
-        <input type="submit" value="Submit" onClick={() => createComment(data.data)} />
-      </form>
-    </div>
+    <AuthCheck>
+      <div className="mb-10">
+        <p>Write a comment</p>
+        <form action="" className="flex flex-col gap-4">
+          <textarea className="border rounded-md h-20 resize-none" value={content} onChange={(e) => setContent(e.target.value)} />
+          <input type="submit" value="Submit" onClick={(e) => handleSubmit(e, data, session)} />
+        </form>
+      </div>
+    </AuthCheck>
   );
 }

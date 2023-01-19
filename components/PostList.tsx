@@ -1,28 +1,13 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { calculateReadTime, reduceText } from "../lib/helpers";
 
 export default function PostList({ posts }: any) {
   const [postsState, setPostsState] = useState([]);
 
-  const deletePost = async (e: any, id: any) => {
-    e.preventDefault();
-    setPostsState(postsState.filter((post: any) => post._id !== id));
-    fetch(`/api/posts/delete/${id}`, {
-      method: "DELETE",
-    });
-  };
-
   useEffect(() => {
     setPostsState(posts);
   }, [posts]);
-
-  const getAuthor = async (id: any) => {
-    const author = await fetch(`/api/users/${id}`, {
-      method: "GET",
-    });
-    const data = await author.json();
-    return data;
-  };
 
   return (
     <ol>
@@ -34,14 +19,15 @@ export default function PostList({ posts }: any) {
             </Link>
             <Link href={`/post/${post._id}`} className="w-full">
               <div className="flex justify-between">
-                <div>
+                <div id="header" className="flex items-center gap-3">
                   <h1 className="text-xl font-medium">{post.title}</h1>
+                  <span className="text-xs">{calculateReadTime(post.content)} min read</span>
                 </div>
                 <div>
-                  <p>{post.views} Views</p>
+                  <p className="text-gray-500 text-sm overflow-hidden break-normal">{post.views} Views</p>
                 </div>
               </div>
-              <p>{post.content}</p>
+              <p>{reduceText(post.content, 150)}</p>
             </Link>
           </li>
         );

@@ -7,11 +7,8 @@ import { getSession, useSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import AccessDenied from "../components/AccessDenied";
 import { useEffect } from "react";
-
-async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
-  const res = await fetch(input, init);
-  return res.json();
-}
+import { fetcher } from "../lib/helpers";
+import { getUsersPosts } from "../hooks/posts";
 
 function createUserInDatabaseIfNotExists(session: any) {
   if (session) {
@@ -33,22 +30,6 @@ export default function Home({ session }: any) {
     createUserInDatabaseIfNotExists(session);
   }, [session]);
 
-  if (!session) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    );
-  }
-
-  if (!session) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    );
-  }
-
   return (
     <Layout>
       <Head>
@@ -56,22 +37,27 @@ export default function Home({ session }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="bg-gray-900 text-white text-center py-32">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl">A blogplatform</h2>
-          <p>A fullstack Next-Mongodb blogplatform</p>
-        </div>
-      </section>
-      <main className="container">
-        <div className="my-10">
+      <div className="container grid grid-cols-1 md:grid-cols-3 py-10 gap-10">
+        <main className=" col-span-2">
           <div className="flex justify-between mb-10">
             <h2 className="text-3xl font-bold">All blogposts</h2>
-            <input type="text" placeholder="Search" className="bg-white shadow border-gray-100 rounded-full  w-96" />
           </div>
           <PostList posts={posts} />
-        </div>
-      </main>
-      <footer>footer</footer>
+        </main>
+        <aside>
+          <div className="p-4">
+            <button className="bg-gray-900 text-white rounded-full py-4 w-full mb-8">Get unlimited acess</button>
+            <h3 className="text-xl mb-5">Staff picks</h3>
+            <div>
+              <div className="flex gap-2 items-center">
+                <img src="https://lh3.googleusercontent.com/a/AEdFTp5RhnShx4VRzrKCk11-NHrhkJDMvSYeL7rcVghgLw=s96-c" className="rounded-full w-8 " alt="" />
+                <p className="text-lg">Charles Krook</p>
+              </div>
+              <p className="font-bold text-2xl ">Lorem ipsum dolor sit amet consectetur </p>
+            </div>
+          </div>
+        </aside>
+      </div>
     </Layout>
   );
 }
